@@ -1,0 +1,296 @@
+---
+# ==========================================================================
+# ✏️  PARTE 1 — PREENCHA SEUS DADOS (capa e folha de rosto saem daqui)
+# ==========================================================================
+title: "Título do Projeto Integrador"
+subtitle: "subtítulo, se houver"          # apague a linha se não houver
+autores:
+  - "Nome Completo do(a) Aluno(a) 1"
+  - "Nome Completo do(a) Aluno(a) 2"
+orientador: "Prof. Nome do Orientador"
+instituicao: "Centro Universitário de Brasília – CEUB"
+curso: "Curso de Ciência de Dados e Machine Learning"
+cidade: "Brasília"
+ano: "2025"
+natureza: >-
+  Relatório final apresentado à disciplina Projeto Integrador III do
+  Curso de Ciência de Dados e Machine Learning do Centro Universitário
+  de Brasília, como requisito parcial para aprovação.
+
+# ==========================================================================
+# 🔒  PARTE 2 — PADRÃO ABNT DO CURSO (NÃO ALTERE)
+#     Margens, fontes, títulos, paginação e citações vêm da extensão
+#     _extensions/Professor-Weslley/pi-abnt. Para receber correções do
+#     professor, rode no terminal: quarto update extension Professor-Weslley/pi-abnt
+# ==========================================================================
+bibliography: refs.bib
+engine: knitr
+format: pi-abnt-pdf
+---
+
+```{r}
+#| label: setup-r
+#| include: false
+# Conecta o R ao Python (reticulate). Veja o README para preparar o computador.
+# No GitHub Actions o ambiente é escolhido automaticamente (RETICULATE_PYTHON).
+# Se o Python correto não for encontrado, descomente UMA das linhas abaixo.
+# Ambiente criado pelo README (Windows e macOS):
+# reticulate::use_virtualenv("r-reticulate", required = TRUE)
+# Anaconda:
+# reticulate::use_condaenv("pi", required = TRUE)
+# Caminho direto (no Windows use barras "/", não "\"):
+# reticulate::use_python("C:/Users/SEU_USUARIO/AppData/Local/Programs/Python/Python311/python.exe", required = TRUE)
+# reticulate::use_python("/usr/local/bin/python3", required = TRUE)        # macOS
+library(reticulate)
+library(knitr)
+```
+
+```{python}
+#| label: setup-python
+#| include: false
+# Carrega o padrão visual do curso (cores, fontes, números em pt-BR).
+import sys, glob, os
+sys.path.insert(0, os.path.dirname(glob.glob("_extensions/**/padrao.py", recursive=True)[0]))
+from padrao import *
+aplicar_padrao()
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+<!-- ======================================================================
+     ELEMENTOS PRÉ-TEXTUAIS
+     {.pre} = título centralizado, sem número, fora do sumário
+     ====================================================================== -->
+
+# Agradecimentos {.pre}
+
+<!-- Opcional. Apague esta seção inteira se não quiser agradecimentos. -->
+
+Agradecemos a todos que contribuíram para a realização deste projeto, em especial à equipe docente do curso.
+
+# Resumo {.pre}
+
+<!-- Parágrafo único, de 150 a 500 palavras (NBR 6028): objetivo, método,
+     resultados e conclusões. Escreva por último. -->
+
+Este trabalho apresenta a proposta, o desenvolvimento e os resultados de uma solução baseada em ciência de dados, desenvolvida como parte do Projeto Integrador III do curso de Ciência de Dados e Machine Learning do CEUB. Descreva aqui, em um único parágrafo, o problema, os dados utilizados, os métodos aplicados e os principais resultados obtidos.
+
+**Palavras-chave**: ciência de dados. aprendizado de máquina. projeto integrador.
+
+# Abstract {.pre}
+
+This work presents the proposal, development and results of a data science solution developed as part of the Integrative Project III of the Data Science and Machine Learning course at CEUB.
+
+**Keywords**: data science. machine learning. integrative project.
+
+<!-- Lista de figuras, lista de tabelas e sumário — gerados automaticamente. -->
+
+::: listas
+:::
+
+<!-- ======================================================================
+     ELEMENTOS TEXTUAIS — a numeração das páginas começa aqui.
+     NÃO numere os títulos à mão: "# Introdução" vira "1 INTRODUÇÃO".
+     ====================================================================== -->
+
+# Introdução
+
+Texto introdutório explicando o problema, o contexto e a importância da solução proposta. Citações seguem a ABNT automaticamente: no fim da frase [@nussbaumer2015] ou no texto, como em @nussbaumer2015.
+
+## Justificativa
+
+Explique por que o problema é relevante.
+
+## Objetivos
+
+### Objetivo geral
+
+Descreva o objetivo geral.
+
+### Objetivos específicos
+
+- Objetivo específico 1;
+- Objetivo específico 2;
+- Objetivo específico 3.
+
+## Estrutura do trabalho
+
+A @sec-fundamentacao apresenta a fundamentação teórica; a @sec-metodologia descreve os dados e métodos; a @sec-resultados apresenta os resultados; e a @sec-conclusao traz as considerações finais.
+
+# Fundamentação teórica {#sec-fundamentacao}
+
+Discussão sobre os conceitos utilizados: ciência de dados, técnicas de aprendizado de máquina, ferramentas e trabalhos relacionados.
+
+# Metodologia {#sec-metodologia}
+
+## Dados utilizados
+
+<!-- ✏️ SUBSTITUA: troque o arquivo de exemplo pelos seus dados reais.
+     Coloque seus arquivos na pasta dados/. -->
+
+```{python}
+#| label: carregar-dados
+df = pd.read_csv("dados/vendas_exemplo.csv")
+
+# Valores usados no texto (veja o parágrafo abaixo do chunk)
+n_registros = len(df)
+n_regioes = df["regiao"].nunique()
+periodo = f'{df["mes"].min()} a {df["mes"].max()}'
+```
+
+A base de dados contém `r py$n_registros` registros de `r py$n_regioes` regiões, referentes ao período de `r py$periodo`. Esses números são calculados no código e atualizados automaticamente ao renderizar o relatório: nunca digite resultados à mão.
+
+## Ferramentas
+
+As análises foram realizadas em Python (pandas, NumPy e Matplotlib), integradas ao relatório pelo Quarto por meio do pacote reticulate do R.
+
+# Resultados {#sec-resultados}
+
+## Análise descritiva
+
+<!-- ✏️ SUBSTITUA: modelo de TABELA.
+     O cálculo é feito em Python; a tabela é desenhada pelo R (knitr::kable),
+     acessando o objeto Python com py$nome_do_objeto.
+     Mantenha o prefixo "tbl-" no label para numerar e citar com @tbl-... -->
+
+```{python}
+#| label: calc-resumo
+resumo = (
+    df.groupby("regiao", as_index=False)
+      .agg(clientes=("clientes", "mean"), vendas=("vendas", "sum"))
+      .sort_values("vendas", ascending=False)
+)
+# Versão para exibição: números já formatados no padrão brasileiro
+resumo_tab = resumo.assign(
+    clientes=resumo["clientes"].map(lambda v: numero_br(v, 0)),
+    vendas=resumo["vendas"].map(lambda v: numero_br(v, 2)),
+)
+```
+
+```{r}
+#| label: tbl-resumo
+#| tbl-cap: "Média mensal de clientes e vendas totais por região"
+kable(
+  py$resumo_tab,
+  col.names = c("Região", "Clientes (média/mês)", "Vendas totais (R$)"),
+  align = c("l", "r", "r"),
+  booktabs = TRUE,
+  row.names = FALSE
+)
+```
+
+::: fonte
+Fonte: elaborado pelos autores (2025).
+:::
+
+A @tbl-resumo mostra que a região com maior volume de vendas foi `r py$resumo$regiao[1]`.
+
+## Evolução temporal
+
+<!-- ✏️ SUBSTITUA: modelo de GRÁFICO.
+     Mantenha o prefixo "fig-" no label e escreva o título em fig-cap.
+     Não use plt.title(): o título do gráfico é a legenda ABNT. -->
+
+```{python}
+#| label: fig-evolucao
+#| fig-cap: "Evolução mensal das vendas por região"
+fig, ax = plt.subplots()
+for regiao, grupo in df.groupby("regiao"):
+    ax.plot(grupo["mes"], grupo["vendas"], marker="o", markersize=3, label=regiao)
+ax.set_xlabel("Mês")
+ax.set_ylabel("Vendas (R$)")
+eixo_br(ax, "y", formato="moeda", casas=0)
+ax.tick_params(axis="x", rotation=45)
+ax.legend(ncol=4, loc="upper center", bbox_to_anchor=(0.5, 1.15))
+plt.show()
+```
+
+::: fonte
+Fonte: elaborado pelos autores (2025).
+:::
+
+Conforme a @fig-evolucao, todas as regiões apresentaram tendência de crescimento ao longo do período.
+
+## Modelo preditivo
+
+<!-- ✏️ SUBSTITUA: modelo de RESULTADO DE MODELO com métricas no texto.
+     Troque pela sua técnica (scikit-learn, statsmodels etc.). -->
+
+```{python}
+#| label: modelo
+x = df["clientes"].to_numpy()
+y = df["vendas"].to_numpy()
+coef, intercepto = np.polyfit(x, y, 1)
+y_prev = coef * x + intercepto
+r2 = 1 - ((y - y_prev) ** 2).sum() / ((y - y.mean()) ** 2).sum()
+
+txt_coef = moeda_br(coef)
+txt_r2 = numero_br(r2, 3)
+```
+
+```{python}
+#| label: fig-modelo
+#| fig-cap: "Relação entre número de clientes e vendas, com reta de regressão"
+fig, ax = plt.subplots()
+ax.scatter(x, y, s=12, alpha=0.7, color=COR_PRINCIPAL, label="Observado")
+ordem = np.argsort(x)
+ax.plot(x[ordem], y_prev[ordem], color=COR_DESTAQUE, label="Regressão linear")
+ax.set_xlabel("Clientes no mês")
+ax.set_ylabel("Vendas (R$)")
+eixo_br(ax, "y", formato="moeda", casas=0)
+ax.legend()
+plt.show()
+```
+
+::: fonte
+Fonte: elaborado pelos autores (2025).
+:::
+
+A regressão linear indicou que cada cliente adicional está associado a um acréscimo médio de `r py$txt_coef` nas vendas mensais, com coeficiente de determinação R² = `r py$txt_r2` (@fig-modelo).
+
+## Figuras externas
+
+<!-- ✏️ SUBSTITUA: modelo para PRINTS, DIAGRAMAS e imagens salvas na pasta imagens/.
+     Descomente e ajuste o nome do arquivo:
+
+![Arquitetura da solução](imagens/arquitetura.png){#fig-arquitetura width=80%}
+
+::: fonte
+Fonte: elaborado pelos autores (2025).
+:::
+-->
+
+Para inserir capturas de tela ou diagramas, salve a imagem em `imagens/` e use o modelo comentado no código-fonte desta seção.
+
+# Conclusão {#sec-conclusao}
+
+Análise crítica dos resultados, limitações, aprendizados e próximos passos.
+
+<!-- ======================================================================
+     ELEMENTOS PÓS-TEXTUAIS
+     {.pos} = título centralizado, sem número, aparece no sumário
+     ====================================================================== -->
+
+# Referências {.pos}
+
+<!-- Gerada automaticamente a partir do refs.bib e das citações @chave.
+     Só aparecem as obras citadas no texto. -->
+
+::: {#refs}
+:::
+
+# Apêndice A – Código-fonte principal {.pos}
+
+<!-- Opcional. Para mostrar código, use #| echo: true no chunk. -->
+
+```{python}
+#| label: apendice-codigo
+#| echo: true
+#| eval: false
+df = pd.read_csv("dados/vendas_exemplo.csv")
+resumo = df.groupby("regiao").agg(vendas=("vendas", "sum"))
+```
+
+Repositório do projeto: <https://github.com/usuario/repositorio>.

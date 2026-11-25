@@ -1,0 +1,52 @@
+title: PI ABNT
+author: Prof. Weslley Rodrigues
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    pdf:
+      # --- Página (NBR 14724) ------------------------------------------------
+      documentclass: report
+      papersize: a4
+      fontsize: 12pt
+      mainfont: "Times New Roman"
+      linestretch: 1.5
+      indent: true
+      geometry:
+        - top=3cm
+        - left=3cm
+        - bottom=2cm
+        - right=2cm
+      # --- Seções, figuras e tabelas ----------------------------------------
+      number-sections: true
+      top-level-division: chapter
+      toc: false            # o sumário é inserido por ::: listas (ordem ABNT)
+      fig-cap-location: top
+      tbl-cap-location: top
+      fig-pos: "H"
+      fig-width: 6.3
+      fig-height: 3.4
+      crossref:
+        fig-title: Figura
+        tbl-title: Tabela
+      language:
+        crossref-fig-title: Figura
+        crossref-tbl-title: Tabela
+        crossref-sec-prefix: Seção
+        crossref-ch-prefix: Seção
+        crossref-fig-prefix: Figura
+        crossref-tbl-prefix: Tabela
+      # --- Código ------------------------------------------------------------
+      execute:
+        echo: false
+        warning: false
+        message: false
+      # --- Citações (NBR 10520 / NBR 6023) -----------------------------------
+      csl: abnt.csl
+      link-citations: true
+      # --- Estilo ------------------------------------------------------------
+      include-in-header: abnt.tex
+      template-partials:
+        - before-body.tex
+      filters:
+        - abnt.lua

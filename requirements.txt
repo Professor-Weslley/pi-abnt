@@ -1,0 +1,6 @@
+pandas
+numpy
+matplotlib
+# Acrescente aqui os pacotes do seu projeto (um por linha), ex.:
+# scikit-learn
+# seaborn

@@ -1,0 +1,21 @@
+# Arquivos gerados pelo Quarto/LaTeX
+relatorio_pi.pdf
+*.tex
+*.log
+*_files/
+.quarto/
+
+# R / RStudio
+.Rhistory
+.RData
+.Rproj.user/
+
+# Python
+__pycache__/
+.venv/
+.ipynb_checkpoints/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
