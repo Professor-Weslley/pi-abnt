@@ -23,6 +23,7 @@ Modelo oficial do relatório final do PI. Ele já sai no padrão ABNT: capa, fol
 3. **Chunks marcados com `✏️ SUBSTITUA`**: troque o código de exemplo pelo seu, mas mantenha:
    - `#| label: fig-...` e `#| fig-cap: "..."` em gráficos;
    - `#| label: tbl-...` e `#| tbl-cap: "..."` em tabelas;
+   - `#| results: hide` em chunks Python que geram gráficos ou treinam modelos;
    - o bloco `::: fonte` logo abaixo de cada figura ou tabela.
 4. **Referências**: cadastre no `refs.bib` e cite com `[@chave]` ou `@chave`. A lista final é montada sozinha, no padrão ABNT.
 
@@ -122,4 +123,5 @@ Só a pasta `_extensions/` muda; o seu texto não é alterado. Depois faça comm
 | `Unknown format pi-abnt-pdf` | A pasta `_extensions/` está faltando ou foi apagada. Rode `quarto add Professor-Weslley/pi-abnt`. |
 | `LaTeX Error: File 'xxx.sty' not found` | No Console: `tinytex::tlmgr_install("nome-do-pacote")`. |
 | Funciona no seu computador, mas fica ❌ no GitHub | Falta pacote no `requirements.txt`, ou o arquivo de dados não foi enviado (confira a pasta `dados/` no GitHub). |
+| Aparecem no PDF linhas como `[<matplotlib.lines.Line2D ...>]`, `Text(...)` ou `Pipeline(...)` | Acrescente `#| results: hide` no início do chunk Python. O reticulate imprime o valor de retorno de comandos como `ax.plot()` e `.fit()`. |
 | O PDF não atualiza (Windows) | Feche o PDF aberto no leitor e renderize de novo. |
