@@ -1,7 +1,7 @@
 # Arquivos gerados pelo Quarto/LaTeX
 relatorio_pi.pdf
-*.tex
-*.log
+relatorio_pi.tex
+relatorio_pi.log
 *_files/
 .quarto/
 
