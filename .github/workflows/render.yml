@@ -40,6 +40,9 @@ jobs:
 
       - name: Quarto + TinyTeX
         uses: quarto-dev/quarto-actions/setup@v2
+        env:
+          # Evita o erro 403 (limite de acesso anônimo à API do GitHub)
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tinytex: true
 
