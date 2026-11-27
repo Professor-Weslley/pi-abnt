@@ -1,4 +1,4 @@
-# Relatório final do Projeto Integrador (ABNT + Quarto + Python)
+# Modelo para o Relatório final do Projeto Integrador (ABNT + Quarto + Python)
 
 Modelo oficial do relatório final do PI. Ele já sai no padrão ABNT do folder *Aplicação das normas da ABNT em trabalhos acadêmicos*, da Biblioteca do CEUB: capa com o logo do CEUB, folha de rosto, resumo, listas, sumário, títulos numerados, paginação, legendas, citações e referências. Você só escreve o conteúdo e troca os códigos de exemplo pelos seus.
 
