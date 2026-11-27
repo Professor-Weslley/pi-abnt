@@ -4,6 +4,12 @@ Modelo oficial do relatório final do PI. Ele já sai no padrão ABNT: capa, fol
 
 > **Como começar e como entregar:** veja [ENTREGA.md](ENTREGA.md).
 
+## O processo em uma página
+
+[![Infocard: do modelo à entrega](docs/infocard.png)](docs/infocard.pdf)
+
+*Clique na imagem para abrir a versão em PDF, para imprimir.*
+
 ## O que tem aqui
 
 | Arquivo / pasta | Para que serve | Você edita? |
@@ -15,6 +21,7 @@ Modelo oficial do relatório final do PI. Ele já sai no padrão ABNT: capa, fol
 | `imagens/` | Prints e diagramas | **Sim** |
 | `_extensions/Professor-Weslley/pi-abnt/` | Padrão ABNT do curso (extensão do Quarto) | **Não** |
 | `.github/workflows/render.yml` | Gera o PDF automaticamente no GitHub | **Não** |
+| `docs/` | Infocard com o processo de uso | **Não** |
 
 ## Escrevendo o relatório
 
