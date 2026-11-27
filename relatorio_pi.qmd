@@ -1,6 +1,6 @@
 ---
 # ==========================================================================
-# ✏️  PARTE 1 — PREENCHA SEUS DADOS (capa e folha de rosto saem daqui)
+# PARTE 1 — PREENCHA SEUS DADOS (capa e folha de rosto saem daqui)
 #     O título aparece na capa E na folha de rosto: é assim na ABNT.
 # ==========================================================================
 title: "Título do Projeto Integrador"
