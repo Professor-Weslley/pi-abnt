@@ -1,6 +1,7 @@
 ---
 # ==========================================================================
 # ✏️  PARTE 1 — PREENCHA SEUS DADOS (capa e folha de rosto saem daqui)
+#     O título aparece na capa E na folha de rosto: é assim na ABNT.
 # ==========================================================================
 title: "Título do Projeto Integrador"
 subtitle: "subtítulo, se houver"          # apague a linha se não houver
@@ -11,11 +12,17 @@ orientador: "Prof. Nome do Orientador"
 instituicao: "Centro Universitário de Brasília – CEUB"
 curso: "Curso de Ciência de Dados e Machine Learning"
 cidade: "Brasília"
-ano: "2025"
+ano: "2026"
 natureza: >-
-  Relatório final apresentado à disciplina Projeto Integrador III do
+  Relatório final apresentado à disciplina Projeto Integrador II do
   Curso de Ciência de Dados e Machine Learning do Centro Universitário
   de Brasília, como requisito parcial para aprovação.
+# Folha de aprovação (opcional): descomente para incluir a banca examinadora.
+# data-aprovacao: "2 de dezembro de 2026"
+# banca:
+#   - "Prof. Nome Sobrenome, Dr. (orientador)"
+#   - "Prof. Nome Sobrenome, Me."
+# A capa usa o logo do CEUB. Para tirar: logo: false
 
 # ==========================================================================
 # 🔒  PARTE 2 — PADRÃO ABNT DO CURSO (NÃO ALTERE)
@@ -73,17 +80,18 @@ Agradecemos a todos que contribuíram para a realização deste projeto, em espe
 # Resumo {.pre}
 
 <!-- Parágrafo único, de 150 a 500 palavras (NBR 6028): objetivo, método,
-     resultados e conclusões. Escreva por último. -->
+     resultados e conclusões. Escreva por último.
+     Mínimo de 3 palavras-chave, separadas por ponto e vírgula (;). -->
 
-Este trabalho apresenta a proposta, o desenvolvimento e os resultados de uma solução baseada em ciência de dados, desenvolvida como parte do Projeto Integrador III do curso de Ciência de Dados e Machine Learning do CEUB. Descreva aqui, em um único parágrafo, o problema, os dados utilizados, os métodos aplicados e os principais resultados obtidos.
+Este trabalho apresenta a proposta, o desenvolvimento e os resultados de uma solução baseada em ciência de dados, desenvolvida como parte do Projeto Integrador II do curso de Ciência de Dados e Machine Learning do CEUB. Descreva aqui, em um único parágrafo, o problema, os dados utilizados, os métodos aplicados e os principais resultados obtidos.
 
-**Palavras-chave**: ciência de dados. aprendizado de máquina. projeto integrador.
+**Palavras-chave**: ciência de dados; aprendizado de máquina; projeto integrador.
 
 # Abstract {.pre}
 
-This work presents the proposal, development and results of a data science solution developed as part of the Integrative Project III of the Data Science and Machine Learning course at CEUB.
+This work presents the proposal, development and results of a data science solution developed as part of the Integrative Project II of the Data Science and Machine Learning course at CEUB.
 
-**Keywords**: data science. machine learning. integrative project.
+**Keywords**: data science; machine learning; integrative project.
 
 <!-- Lista de figuras, lista de tabelas e sumário — gerados automaticamente. -->
 
@@ -123,6 +131,17 @@ A @sec-fundamentacao apresenta a fundamentação teórica; a @sec-metodologia de
 
 Discussão sobre os conceitos utilizados: ciência de dados, técnicas de aprendizado de máquina, ferramentas e trabalhos relacionados.
 
+<!-- ✏️ Modelo de CITAÇÃO DIRETA com mais de 3 linhas (NBR 10520): use ::: citacao.
+     Sai com recuo de 4 cm, letra menor, entrelinha simples e sem aspas.
+     Citação direta curta (até 3 linhas) fica no texto, entre aspas, com a página:
+     "trecho citado" [@chave, p. 12]. -->
+
+Segundo @nussbaumer2015 [p. 2], a comunicação dos resultados é parte da análise:
+
+::: citacao
+Texto da citação direta com mais de três linhas, transcrito exatamente como está na obra original. Ela fica destacada do parágrafo, com recuo de 4 cm da margem esquerda, letra menor que a do texto e entrelinha simples, sem aspas. Substitua este exemplo por uma citação real da sua bibliografia.
+:::
+
 # Metodologia {#sec-metodologia}
 
 ## Dados utilizados
@@ -150,55 +169,59 @@ As análises foram realizadas em Python (pandas, NumPy e Matplotlib), integradas
 
 ## Análise descritiva
 
-<!-- ✏️ SUBSTITUA: modelo de TABELA.
-     O cálculo é feito em Python; a tabela é desenhada pelo R (knitr::kable),
-     acessando o objeto Python com py$nome_do_objeto.
-     Mantenha o prefixo "tbl-" no label para numerar e citar com @tbl-... -->
+<!-- ==================================================================
+     ✏️ MODELO DE TABELA: copie este bloco (do chunk até o ::: fonte).
+     1. Monte a tabela como um DataFrame do pandas.
+     2. Mantenha as 3 opções do chunk:
+          label começando com "tbl-"  -> numera e permite citar com @tbl-...
+          tbl-cap                      -> título da tabela (sai acima dela)
+          results: asis                -> faz a tabela aparecer formatada
+     3. Termine com print(tabela_abnt(...)):
+          nomes = cabeçalhos das colunas; casas = casas decimais.
+     4. Abaixo do chunk, mantenha o bloco ::: fonte.
+     ================================================================== -->
 
 ```{python}
-#| label: calc-resumo
+#| label: tbl-resumo
+#| tbl-cap: "Média mensal de clientes e vendas totais por região"
+#| results: asis
 resumo = (
     df.groupby("regiao", as_index=False)
       .agg(clientes=("clientes", "mean"), vendas=("vendas", "sum"))
       .sort_values("vendas", ascending=False)
 )
-# Versão para exibição: números já formatados no padrão brasileiro
-resumo_tab = resumo.assign(
-    clientes=resumo["clientes"].map(lambda v: numero_br(v, 0)),
-    vendas=resumo["vendas"].map(lambda v: numero_br(v, 2)),
-)
-```
-
-```{r}
-#| label: tbl-resumo
-#| tbl-cap: "Média mensal de clientes e vendas totais por região"
-kable(
-  py$resumo_tab,
-  col.names = c("Região", "Clientes (média/mês)", "Vendas totais (R$)"),
-  align = c("l", "r", "r"),
-  booktabs = TRUE,
-  row.names = FALSE
-)
+print(tabela_abnt(
+    resumo,
+    nomes={"regiao": "Região", "clientes": "Clientes (média/mês)", "vendas": "Vendas totais (R$)"},
+    casas={"clientes": 0, "vendas": 2},
+))
 ```
 
 ::: fonte
-Fonte: elaborado pelos autores (2025).
+Fonte: elaborado pelos autores (2026).
 :::
 
 A @tbl-resumo mostra que a região com maior volume de vendas foi `r py$resumo$regiao[1]`.
 
 ## Evolução temporal
 
-<!-- ✏️ SUBSTITUA: modelo de GRÁFICO.
-     Mantenha o prefixo "fig-" no label e escreva o título em fig-cap.
-     Não use plt.title(): o título do gráfico é a legenda ABNT.
-     Mantenha #| results: hide: sem ele, textos como
-     [<matplotlib.lines.Line2D ...>] aparecem no PDF. -->
+<!-- ==================================================================
+     ✏️ MODELO DE GRÁFICO: copie este bloco (do chunk até o ::: fonte).
+     1. Mantenha as 3 opções do chunk:
+          label começando com "fig-"  -> numera e permite citar com @fig-...
+          fig-cap                      -> título da figura (sai acima dela)
+          results: hide                -> evita textos como
+                                          [<matplotlib.lines.Line2D ...>] no PDF
+     2. Não use plt.title(): o título do gráfico é o fig-cap.
+     3. Sempre comece com fig, ax = plt.subplots() e termine com plt.show().
+        Cores, fonte e tamanho já seguem o padrão do curso.
+     4. Abaixo do chunk, mantenha o bloco ::: fonte.
+     ================================================================== -->
 
 ```{python}
 #| label: fig-evolucao
-#| results: hide
 #| fig-cap: "Evolução mensal das vendas por região"
+#| results: hide
 fig, ax = plt.subplots()
 for regiao, grupo in df.groupby("regiao"):
     ax.plot(grupo["mes"], grupo["vendas"], marker="o", markersize=3, label=regiao)
@@ -211,7 +234,7 @@ plt.show()
 ```
 
 ::: fonte
-Fonte: elaborado pelos autores (2025).
+Fonte: elaborado pelos autores (2026).
 :::
 
 Conforme a @fig-evolucao, todas as regiões apresentaram tendência de crescimento ao longo do período.
@@ -249,7 +272,7 @@ plt.show()
 ```
 
 ::: fonte
-Fonte: elaborado pelos autores (2025).
+Fonte: elaborado pelos autores (2026).
 :::
 
 A regressão linear indicou que cada cliente adicional está associado a um acréscimo médio de `r py$txt_coef` nas vendas mensais, com coeficiente de determinação R² = `r py$txt_r2` (@fig-modelo).
@@ -262,7 +285,7 @@ A regressão linear indicou que cada cliente adicional está associado a um acr�
 ![Arquitetura da solução](imagens/arquitetura.png){#fig-arquitetura width=80%}
 
 ::: fonte
-Fonte: elaborado pelos autores (2025).
+Fonte: elaborado pelos autores (2026).
 :::
 -->
 

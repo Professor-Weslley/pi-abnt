@@ -1,20 +1,31 @@
 %% ==========================================================================
-%% Capa e folha de rosto — preenchidas AUTOMATICAMENTE a partir do YAML.
+%% Capa, folha de rosto e (opcional) folha de aprovação — preenchidas
+%% AUTOMATICAMENTE a partir do YAML, no modelo do folder ABNT do CEUB.
 %% Não edite: altere os campos no topo do relatorio_pi.qmd.
 %% ==========================================================================
 
 %% ------------------------------- CAPA -------------------------------------
 \begin{titlepage}
-\centering\bfseries
-\MakeUppercase{$instituicao$}\par
-$if(curso)$\MakeUppercase{$curso$}\par$endif$
+\centering
+$if(abnt-logo)$
+\begin{minipage}[c]{0.24\textwidth}\raggedleft
+\includegraphics[height=1.35cm]{$abnt-logo$}
+\end{minipage}\hspace{0.6em}%
+\begin{minipage}[c]{0.66\textwidth}\raggedright\singlespacing
+$instituicao$\par
+$if(curso)$$curso$\par$endif$
+\end{minipage}\par
+$else$
+{\bfseries\MakeUppercase{$instituicao$}\par
+$if(curso)$\MakeUppercase{$curso$}\par$endif$}
+$endif$
 \vspace{2.5cm}
-$for(autores)$\MakeUppercase{$autores$}\par$endfor$
+{\bfseries $for(autores)$\MakeUppercase{$autores$}\par$endfor$}
 \vfill
-\MakeUppercase{$title$}$if(subtitle)$:\par\mdseries $subtitle$$endif$\par
+{\bfseries\MakeUppercase{$title$}$if(subtitle)$:\par\mdseries $subtitle$$endif$\par}
 \vfill
-\MakeUppercase{$cidade$}\par
-$ano$\par
+{\bfseries\MakeUppercase{$cidade$}\par
+$ano$\par}
 \end{titlepage}
 
 %% --------------------------- FOLHA DE ROSTO --------------------------------
@@ -25,10 +36,10 @@ $for(autores)$\MakeUppercase{$autores$}\par$endfor$
 \vspace{4cm}
 \MakeUppercase{$title$}$if(subtitle)$:\par\mdseries $subtitle$$endif$\par
 \end{center}
-\vspace{2cm}
+\vspace{1.5cm}
 \begin{flushright}
-\begin{minipage}{0.55\textwidth}
-\singlespacing\small
+\begin{minipage}{\dimexpr\textwidth-8cm\relax}
+\singlespacing\small\setlength{\parindent}{0pt}
 $natureza$
 $if(orientador)$
 
@@ -44,3 +55,34 @@ $endif$
 $ano$\par
 \end{center}
 \clearpage
+
+$if(banca)$
+%% ------------------------- FOLHA DE APROVAÇÃO ------------------------------
+\begin{center}
+\bfseries
+$for(autores)$\MakeUppercase{$autores$}\par$endfor$
+\vspace{2cm}
+\MakeUppercase{$title$}$if(subtitle)$:\par\mdseries $subtitle$$endif$\par
+\end{center}
+\vspace{1cm}
+\begin{flushright}
+\begin{minipage}{\dimexpr\textwidth-8cm\relax}
+\singlespacing\small\setlength{\parindent}{0pt}
+$natureza$
+\end{minipage}
+\end{flushright}
+\vfill
+\begin{center}
+{\bfseries\MakeUppercase{$cidade$}$if(data-aprovacao)$, $data-aprovacao$$endif$\par}
+\vspace{1.5em}
+{\bfseries BANCA EXAMINADORA\par}
+\vspace{2.5em}
+$for(banca)$
+\rule{8cm}{0.4pt}\par
+{\small $banca$\par}
+\vspace{2em}
+$endfor$
+\end{center}
+\vfill
+\clearpage
+$endif$

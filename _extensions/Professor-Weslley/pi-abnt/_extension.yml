@@ -1,6 +1,6 @@
 title: PI ABNT
 author: Prof. Weslley Rodrigues
-version: 1.0.0
+version: 1.1.0
 quarto-required: ">=1.4.0"
 contributes:
   formats:
@@ -44,6 +44,7 @@ contributes:
       # --- Citações (NBR 10520 / NBR 6023) -----------------------------------
       csl: abnt.csl
       link-citations: true
+      colorlinks: false     # links em preto, como no impresso
       # --- Estilo ------------------------------------------------------------
       include-in-header: abnt.tex
       template-partials:

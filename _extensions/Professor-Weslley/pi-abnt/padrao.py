@@ -67,6 +67,46 @@ def percentual_br(valor, casas=1):
     return numero_br(valor * 100, casas) + "%"
 
 
+def tabela_abnt(df, nomes=None, casas=2):
+    """Converte um DataFrame numa tabela para o relatório (padrão ABNT).
+
+    Use num chunk Python com as opções:
+        #| label: tbl-alguma-coisa
+        #| tbl-cap: "Título da tabela"
+        #| results: asis
+    e termine o chunk com: print(tabela_abnt(minha_tabela))
+
+    nomes: dicionário {coluna: "Cabeçalho"} para renomear colunas.
+    casas: casas decimais dos números (um número para todas as colunas,
+           ou um dicionário {coluna: casas}). Inteiros saem sem casas.
+    Números saem no padrão brasileiro (1.234,56), alinhados à direita.
+    """
+    nomes = nomes or {}
+    colunas = list(df.columns)
+
+    def casas_de(col):
+        return casas.get(col, 2) if isinstance(casas, dict) else casas
+
+    def celula(valor, col):
+        if pd.isna(valor):
+            return "–"
+        if isinstance(valor, (bool,)):
+            return "Sim" if valor else "Não"
+        if pd.api.types.is_integer(valor):
+            return numero_br(valor, 0)
+        if pd.api.types.is_float(valor):
+            return numero_br(valor, casas_de(col))
+        return str(valor).replace("|", "\\|")
+
+    numericas = {c: pd.api.types.is_numeric_dtype(df[c]) and not pd.api.types.is_bool_dtype(df[c])
+                 for c in colunas}
+    cabecalho = "| " + " | ".join(str(nomes.get(c, c)) for c in colunas) + " |"
+    alinhamento = "|" + "|".join("---:" if numericas[c] else ":---" for c in colunas) + "|"
+    linhas = ["| " + " | ".join(celula(v, c) for c, v in zip(colunas, reg)) + " |"
+              for reg in df.itertuples(index=False, name=None)]
+    return "\n" + "\n".join([cabecalho, alinhamento] + linhas) + "\n"
+
+
 def eixo_br(ax, eixo="y", casas=0, formato="numero"):
     """Formata os rótulos de um eixo no padrão brasileiro.
 

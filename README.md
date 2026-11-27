@@ -1,6 +1,6 @@
 # Relatório final do Projeto Integrador (ABNT + Quarto + Python)
 
-Modelo oficial do relatório final do PI. Ele já sai no padrão ABNT: capa, folha de rosto, resumo, listas, sumário, títulos numerados, paginação, legendas, citações e referências. Você só escreve o conteúdo e troca os códigos de exemplo pelos seus.
+Modelo oficial do relatório final do PI. Ele já sai no padrão ABNT do folder *Aplicação das normas da ABNT em trabalhos acadêmicos*, da Biblioteca do CEUB: capa com o logo do CEUB, folha de rosto, resumo, listas, sumário, títulos numerados, paginação, legendas, citações e referências. Você só escreve o conteúdo e troca os códigos de exemplo pelos seus.
 
 > **Como começar e como entregar:** veja [ENTREGA.md](ENTREGA.md).
 
@@ -19,20 +19,55 @@ Modelo oficial do relatório final do PI. Ele já sai no padrão ABNT: capa, fol
 | `requirements.txt` | Pacotes Python do seu projeto | **Sim** |
 | `dados/` | Seus dados | **Sim** |
 | `imagens/` | Prints e diagramas | **Sim** |
-| `_extensions/Professor-Weslley/pi-abnt/` | Padrão ABNT do curso (extensão do Quarto) | **Não** |
+| `_extensions/Professor-Weslley/pi-abnt/` | Padrão ABNT do curso (extensão do Quarto, com o logo do CEUB) | **Não** |
 | `.github/workflows/render.yml` | Gera o PDF automaticamente no GitHub | **Não** |
 | `docs/` | Infocard com o processo de uso | **Não** |
 
 ## Escrevendo o relatório
 
 1. **Topo do `relatorio_pi.qmd` (PARTE 1)**: título, autores, orientador etc. A capa e a folha de rosto são geradas sozinhas a partir daí.
+   - **Folha de aprovação** (opcional): descomente `data-aprovacao` e `banca` no topo do arquivo.
+   - **Logo da capa**: sai o do CEUB. Para uma capa só com texto, acrescente `logo: false`.
 2. **Texto**: escreva normalmente. **Não numere os títulos**: `# Introdução` vira "1 INTRODUÇÃO".
-3. **Chunks marcados com `✏️ SUBSTITUA`**: troque o código de exemplo pelo seu, mas mantenha:
-   - `#| label: fig-...` e `#| fig-cap: "..."` em gráficos;
-   - `#| label: tbl-...` e `#| tbl-cap: "..."` em tabelas;
-   - `#| results: hide` em chunks Python que geram gráficos ou treinam modelos;
-   - o bloco `::: fonte` logo abaixo de cada figura ou tabela.
-4. **Referências**: cadastre no `refs.bib` e cite com `[@chave]` ou `@chave`. A lista final é montada sozinha, no padrão ABNT.
+3. **Chunks marcados com `✏️`**: troque o código de exemplo pelo seu. Para cada nova tabela ou gráfico, **copie o MODELO DE TABELA ou o MODELO DE GRÁFICO** da seção Resultados e ajuste:
+
+   **Tabela**
+   ````
+   ```{python}
+   #| label: tbl-minha-tabela
+   #| tbl-cap: "Título da tabela"
+   #| results: asis
+   print(tabela_abnt(meu_dataframe, nomes={"col": "Cabeçalho"}, casas=2))
+   ```
+
+   ::: fonte
+   Fonte: elaborado pelos autores (2026).
+   :::
+   ````
+
+   **Gráfico**
+   ````
+   ```{python}
+   #| label: fig-meu-grafico
+   #| fig-cap: "Título do gráfico"
+   #| results: hide
+   fig, ax = plt.subplots()
+   ax.bar(x, y)
+   plt.show()
+   ```
+
+   ::: fonte
+   Fonte: elaborado pelos autores (2026).
+   :::
+   ````
+
+   - O `label` precisa começar com `tbl-` ou `fig-`: é isso que numera e permite citar com `@tbl-...` e `@fig-...`.
+   - Não use `plt.title()`: o título vai no `fig-cap` e sai acima da figura, como manda a ABNT.
+4. **Resumo e Abstract**: parágrafo único, de 150 a 500 palavras, com no mínimo 3 palavras-chave **separadas por ponto e vírgula** (`;`).
+5. **Citações e referências** (NBR 10520 e NBR 6023): cadastre as obras no `refs.bib` e cite com `[@chave]` ou `@chave`.
+   - Citação direta curta (até 3 linhas): no texto, entre aspas, com a página: `"trecho" [@chave, p. 12]`.
+   - Citação direta longa (mais de 3 linhas): use o bloco `::: citacao`.
+   - A lista de referências é montada sozinha, em ordem alfabética.
 
 ### Atalhos
 
@@ -41,11 +76,11 @@ Modelo oficial do relatório final do PI. Ele já sai no padrão ABNT: capa, fol
 | `# Resumo {.pre}` | Título centralizado, sem número, fora do sumário |
 | `# Referências {.pos}` | Título centralizado, sem número, no sumário |
 | `::: fonte` | Linha "Fonte: ..." abaixo de figura ou tabela |
+| `::: citacao` | Citação direta longa: recuo de 4 cm, letra menor, entrelinha simples |
 | `` `r py$variavel` `` | Valor calculado em Python dentro do texto |
-| `py$objeto` (em chunk R) | Usa no R um objeto criado em Python |
 | `@fig-x`, `@tbl-x`, `@sec-x` | "Figura 1", "Tabela 2", "Seção 3", com link |
 
-Funções do padrão visual, já carregadas no relatório: `numero_br()`, `moeda_br()`, `percentual_br()`, `eixo_br()`, `PALETA`, `COR_PRINCIPAL`, `COR_DESTAQUE`.
+Funções do padrão visual, já carregadas no relatório: `tabela_abnt()`, `numero_br()`, `moeda_br()`, `percentual_br()`, `eixo_br()`, `PALETA`, `COR_PRINCIPAL`, `COR_DESTAQUE`.
 
 ## Preparar o computador (uma única vez)
 
@@ -120,6 +155,8 @@ quarto update extension Professor-Weslley/pi-abnt
 
 Só a pasta `_extensions/` muda; o seu texto não é alterado. Depois faça commit e push.
 
+> **Versão 1.1 (padrão do folder ABNT do CEUB):** depois de atualizar, troque no seu Resumo e Abstract o separador das palavras-chave de ponto (`.`) para ponto e vírgula (`;`).
+
 ## Problemas comuns
 
 | Sintoma | Solução |
@@ -130,5 +167,6 @@ Só a pasta `_extensions/` muda; o seu texto não é alterado. Depois faça comm
 | `Unknown format pi-abnt-pdf` | A pasta `_extensions/` está faltando ou foi apagada. Rode `quarto add Professor-Weslley/pi-abnt`. |
 | `LaTeX Error: File 'xxx.sty' not found` | No Console: `tinytex::tlmgr_install("nome-do-pacote")`. |
 | Funciona no seu computador, mas fica ❌ no GitHub | Falta pacote no `requirements.txt`, ou o arquivo de dados não foi enviado (confira a pasta `dados/` no GitHub). |
+| A tabela aparece como texto solto, com `|` e `---` | Faltou `#| results: asis` no chunk da tabela. |
 | Aparecem no PDF linhas como `[<matplotlib.lines.Line2D ...>]`, `Text(...)` ou `Pipeline(...)` | Acrescente `#| results: hide` no início do chunk Python. O reticulate imprime o valor de retorno de comandos como `ax.plot()` e `.fit()`. |
 | O PDF não atualiza (Windows) | Feche o PDF aberto no leitor e renderize de novo. |
