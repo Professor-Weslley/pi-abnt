@@ -145,18 +145,6 @@ reticulate::py_install("scikit-learn", envname = "r-reticulate")
   - Se a execução ficar vermelha (❌), o relatório tem erro: clique nela para ver a mensagem.
   - Se você usa pacotes Python além dos padrões, eles precisam estar no `requirements.txt`; senão o PDF não é gerado no GitHub.
 
-## Atualizar o padrão ABNT
-
-Quando o professor avisar que corrigiu o padrão, rode na aba **Terminal** do RStudio:
-
-```bash
-quarto update extension Professor-Weslley/pi-abnt
-```
-
-Só a pasta `_extensions/` muda; o seu texto não é alterado. Depois faça commit e push.
-
-> **Versão 1.1 (padrão do folder ABNT do CEUB):** depois de atualizar, troque no seu Resumo e Abstract o separador das palavras-chave de ponto (`.`) para ponto e vírgula (`;`).
-
 ## Problemas comuns
 
 | Sintoma | Solução |

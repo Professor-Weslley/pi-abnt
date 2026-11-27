@@ -27,8 +27,7 @@ natureza: >-
 # ==========================================================================
 # 🔒  PARTE 2 — PADRÃO ABNT DO CURSO (NÃO ALTERE)
 #     Margens, fontes, títulos, paginação e citações vêm da extensão
-#     _extensions/Professor-Weslley/pi-abnt. Para receber correções do
-#     professor, rode no terminal: quarto update extension Professor-Weslley/pi-abnt
+#     _extensions/Professor-Weslley/pi-abnt.
 # ==========================================================================
 bibliography: refs.bib
 engine: knitr
